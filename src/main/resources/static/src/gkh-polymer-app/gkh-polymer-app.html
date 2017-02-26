@@ -1,0 +1,29 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="gkh-polymer-app">
+    <template>
+        <iron-ajax
+                auto
+                url="/name"
+                handle-as="json"
+                on-response="handleResponse"
+                debounce-duration="300">
+        </iron-ajax>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+        <h2>{{name}}</h2>
+    </template>
+
+    <script>
+        Polymer
+        ({
+             handleResponse: function (data) {
+                 this.name = data.detail.response.name
+             }
+         });
+    </script>
+</dom-module>
