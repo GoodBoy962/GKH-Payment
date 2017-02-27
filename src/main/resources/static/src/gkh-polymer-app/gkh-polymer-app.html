@@ -1,7 +1,24 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/core-elements/core-elements.html"/>
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 
 <dom-module id="gkh-polymer-app">
+    <style>
+        paper-toolbar {
+            background: var(--paper-blue-100);
+            @apply(--layout-around-justified);
+        }
+
+        paper-dropdown-menu, paper-input {
+            @apply(--layout-self-end);
+        }
+    </style>
     <template>
         <iron-ajax
                 auto
@@ -10,17 +27,25 @@
                 on-response="handleResponse"
                 debounce-duration="300">
         </iron-ajax>
-        <style>
-            :host {
-                display: block;
-            }
-        </style>
-        <p>{{name}}</p>
+        <paper-toolbar>
+            <div class="flex"></div>
+            <paper-dropdown-menu>
+                <paper-menu class="dropdown-content">
+                    <paper-item>{{name}}</paper-item>
+                    <paper-item>{{name}}</paper-item>
+                    <paper-item>{{name}}</paper-item>
+                </paper-menu>
+            </paper-dropdown-menu>
+            <div class="flex"></div>
+        </paper-toolbar>
+        <paper-toolbar>
+        </paper-toolbar>
     </template>
 
     <script>
         Polymer
         ({
+             is: 'gkh-polymer-app',
              handleResponse: function (data) {
                  this.name = data.detail.response.name
              }

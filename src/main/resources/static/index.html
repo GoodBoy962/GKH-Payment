@@ -7,11 +7,10 @@
     <title>gkh-polymer</title>
     <meta name="description" content="gkh-polymer description">
     <link rel="manifest" href="manifest.json">
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="bower_components/polymer/polymer.html">
 
-    <link rel="import" href="bower_components/core-elements/core-elements.html"/>
     <link rel="import" href="src/gkh-polymer-app/gkh-polymer-app.html">
-
     <style>
         core-toolbar {
             background: red;
@@ -20,13 +19,6 @@
 </head>
 
 <body fullbleed vertical layout unresolved>
-<core-header-panel flex>
-    <core-toolbar id="mainheader">
-        <span flex>Title</span>
-    </core-toolbar>
-    <div id="content">
-        <gkh-polymer-app></gkh-polymer-app>
-    </div>
-</core-header-panel>
+<gkh-polymer-app></gkh-polymer-app>
 </body>
 </html>
