@@ -1,5 +1,6 @@
 package org.gkh.model;
 
+import org.gkh.model.enums.UserRole;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,6 +16,8 @@ public class Account {
     private String login;
 
     private String password;
+
+    private UserRole userRole;
 
     public Account() {
     }
@@ -48,5 +51,11 @@ public class Account {
         this.password = password;
     }
 
+    public UserRole getUserRole() {
+        return userRole;
+    }
 
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
 }

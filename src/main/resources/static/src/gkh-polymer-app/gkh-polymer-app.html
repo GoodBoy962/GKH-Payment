@@ -7,16 +7,52 @@
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="my-icons.html">
 
 <dom-module id="gkh-polymer-app">
     <style>
-        paper-toolbar {
-            background: var(--paper-blue-100);
-            @apply(--layout-around-justified);
+        :host {
+            --app-primary-color: #4285f4;
+            --app-secondary-color: black;
+
+            display: block;
         }
 
-        paper-dropdown-menu, paper-input {
-            @apply(--layout-self-end);
+        app-header {
+            color: #fff;
+            background-color: var(--app-primary-color);
+        }
+
+        app-header paper-icon-button {
+            --paper-icon-button-ink-color: white;
+        }
+
+        .drawer-list {
+            margin: 0 20px;
+        }
+
+        .drawer-list a {
+            display: block;
+            padding: 0 16px;
+            text-decoration: none;
+            color: var(--app-secondary-color);
+            line-height: 40px;
+        }
+
+        .drawer-list a.iron-selected {
+            color: black;
+            font-weight: bold;
         }
     </style>
     <template>
@@ -27,19 +63,38 @@
                 on-response="handleResponse"
                 debounce-duration="300">
         </iron-ajax>
-        <paper-toolbar>
-            <div class="flex"></div>
-            <paper-dropdown-menu>
-                <paper-menu class="dropdown-content">
-                    <paper-item>{{name}}</paper-item>
-                    <paper-item>{{name}}</paper-item>
-                    <paper-item>{{name}}</paper-item>
-                </paper-menu>
-            </paper-dropdown-menu>
-            <div class="flex"></div>
-        </paper-toolbar>
-        <paper-toolbar>
-        </paper-toolbar>
+        <app-drawer-layout fullbleed>
+            <app-drawer id="drawer">
+                <app-toolbar>Menu</app-toolbar>
+                <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list"
+                               role="navigation">
+                    <a name="view1" href="/view1">View One</a>
+                    <a name="view2" href="/view2">View Two</a>
+                    <a name="view3" href="/view3">View Three</a>
+                </iron-selector>
+            </app-drawer>
+
+            <app-header-layout has-scrolling-region>
+
+                <app-header condenses reveals effects="waterfall">
+                    <app-toolbar>
+                        <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
+                        <div main-title>{{name}}-услуги</div>
+                    </app-toolbar>
+                </app-header>
+
+                <iron-pages
+                        selected="[[page]]"
+                        attr-for-selected="name"
+                        fallback-selection="view404"
+                        role="main">
+                    <my-view1 name="view1"></my-view1>
+                    <my-view2 name="view2"></my-view2>
+                    <my-view3 name="view3"></my-view3>
+                    <my-view404 name="view404"></my-view404>
+                </iron-pages>
+            </app-header-layout>
+        </app-drawer-layout>
     </template>
 
     <script>
@@ -48,7 +103,36 @@
              is: 'gkh-polymer-app',
              handleResponse: function (data) {
                  this.name = data.detail.response.name
-             }
+             },
+             properties: {
+                 page: {
+                     type: String,
+                     reflectToAttribute: true,
+                     observer: '_pageChanged'
+                 }
+             },
+
+             observers: [
+                 '_routePageChanged(routeData.page)',
+             ],
+
+             _routePageChanged: function (page) {
+                 this.page = page || 'view1';
+
+                 if (!this.$.drawer.persistent) {
+                     this.$.drawer.close();
+                 }
+             },
+
+             _pageChanged: function (page) {
+                 // Load page import on demand. Show 404 page if fails
+                 var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
+                 this.importHref(resolvedPageUrl, null, this._showPage404, true);
+             },
+
+             _showPage404: function () {
+                 this.page = 'view404';
+             },
          });
     </script>
 </dom-module>

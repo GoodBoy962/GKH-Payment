@@ -1,7 +1,6 @@
 package org.gkh.controller;
 
 import org.gkh.model.Account;
-import org.gkh.repository.AccountRepository;
 import org.gkh.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
 
     @Autowired
-    AccountService accountService;
+    private AccountService accountService;
 
     @RequestMapping(value = "/gkh/v1/public/accounts/{accountId}")
     public String getPublicAccountDataLinkedTo(@PathVariable final Long accountId) {

@@ -6,20 +6,21 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import static org.gkh.util.ApiUrls.BASE_API_URL;
+
 /**
  * @author aleksandrpliskin on 26.02.17.
  */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static String BASE_REST_URL = "/gkh/v1";
     private static String USER = "USER";
     private static String ADMIN = "ADMIN";
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
-                .antMatchers(BASE_REST_URL + "/private/accounts/*").hasRole(USER)
+                .antMatchers(BASE_API_URL + "/cards/*").hasRole(USER)
                 .and()
                 .formLogin();
     }
