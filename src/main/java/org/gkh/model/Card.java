@@ -3,6 +3,8 @@ package org.gkh.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -10,6 +12,21 @@ import java.util.Date;
  */
 @Document(collection = "cards")
 public class Card {
+
+    public Card() {
+        this.cardHolder = "TestUser";
+        this.cvc = "386";
+        this.cardNumber = "5209356113866895";
+
+        Date dueDate = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/yy");
+        try {
+            dueDate = sdf.parse("01/19");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.dueDate = dueDate;
+    }
 
     @Id
     private String cardNumber;

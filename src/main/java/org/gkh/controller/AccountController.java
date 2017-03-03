@@ -1,30 +1,39 @@
 package org.gkh.controller;
 
 import org.gkh.model.Account;
+import org.gkh.model.Card;
 import org.gkh.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author aleksandrpliskin on 26.02.17.
  */
-@RestController
+@Controller
+@RequestMapping("/account")
 public class AccountController {
 
     @Autowired
     private AccountService accountService;
 
-    @RequestMapping(value = "/gkh/v1/public/accounts/{accountId}")
-    public String getPublicAccountDataLinkedTo(@PathVariable final Long accountId) {
-        accountService.save(new Account("user", "qwerty"));
-        return "Public account linked to :" + accountId;
+    @RequestMapping(value = "")
+    public String getAccountPage() {
+        return "account";
     }
 
-    @RequestMapping(value = "/ghk/v1/private/accounts/{accountId}")
-    public String getPrivateAccountDataLinkedTo(@PathVariable final Long accountId) {
-        return "Private account linked to :" + accountId;
+    @RequestMapping(value = "/create")
+    @ResponseBody
+    public String createUser() {
+        List<Card> userCards = new ArrayList<>();
+        userCards.add(new Card());
+        Account account = new Account("user", "qwerty", userCards);
+        accountService.save(account);
+        return "Test account successfully created";
     }
-
 }

@@ -4,6 +4,8 @@ import org.gkh.model.enums.UserRole;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 /**
  * @author aleksandrpliskin on 26.02.17.
  */
@@ -19,12 +21,15 @@ public class Account {
 
     private UserRole userRole;
 
+    private List<Card> cards;
+
     public Account() {
     }
 
-    public Account(String login, String password) {
+    public Account(String login, String password, List<Card> cards) {
         this.login = login;
         this.password = password;
+        this.cards = cards;
     }
 
     public String getId() {
@@ -57,5 +62,12 @@ public class Account {
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
     }
 }
