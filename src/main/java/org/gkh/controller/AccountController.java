@@ -3,8 +3,10 @@ package org.gkh.controller;
 import org.gkh.model.Account;
 import org.gkh.model.Card;
 import org.gkh.service.AccountService;
+import org.gkh.service.EdisonDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,8 +24,12 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private EdisonDataService edisonDataService;
+
     @RequestMapping(value = "")
-    public String getAccountPage() {
+    public String getAccountPage(Model model) {
+        model.addAttribute("watts", edisonDataService.getWatts());
         return "account";
     }
 
