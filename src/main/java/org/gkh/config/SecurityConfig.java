@@ -14,8 +14,8 @@ import static org.gkh.util.ApiUrls.BASE_API_URL;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static String USER = "USER";
-    private static String ADMIN = "ADMIN";
+    private static final String USER = "USER";
+    private static final String ADMIN = "ADMIN";
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
