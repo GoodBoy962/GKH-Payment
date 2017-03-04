@@ -15,3 +15,5 @@ application.properties
 *.iws
 *.iml
 *.ipr
+
+.DS_Store

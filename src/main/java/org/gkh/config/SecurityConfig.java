@@ -19,7 +19,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests().antMatchers(BASE_API_URL + "/cards/*").hasRole(USER)
+        httpSecurity.authorizeRequests().antMatchers(BASE_API_URL + "/cards/*",
+                    "/account").hasRole(USER)
                 .and()
                 .formLogin().and().csrf().disable()
                 .headers().frameOptions().disable();

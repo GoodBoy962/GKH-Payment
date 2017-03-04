@@ -15,11 +15,9 @@ public class EdisonDataService {
     EdisonDataRepository edisonDataRepository;
 
     public long getWatts() {
-        long watts = edisonDataRepository.findAll()
+        return edisonDataRepository.findAll()
                 .stream()
                 .map(EdisonData::getData)
-                .reduce((a, e) -> { return a + e; }).get();
-
-        return watts;
+                .reduce((a, e) -> a + e).orElse(0L);
     }
 }

@@ -29,8 +29,13 @@ public class AccountController {
 
     @RequestMapping(value = "")
     public String getAccountPage(Model model) {
-        model.addAttribute("watts", edisonDataService.getWatts());
         return "account";
+    }
+
+    @RequestMapping(value = "/watts")
+    @ResponseBody
+    public Long getWatts() {
+        return edisonDataService.getWatts();
     }
 
     @RequestMapping(value = "/create")
