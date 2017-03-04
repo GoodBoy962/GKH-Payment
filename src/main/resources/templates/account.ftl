@@ -102,6 +102,9 @@
                 </div>
             </div>
             <!-- /.row -->
+
+            <div id="transactions">
+            </div>
         </div>
         <!-- /#page-wrapper -->
     </div>
